@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { nanoid } from "nanoid";
 import ContactFilter from "./ContactFilter/ContactFilter";
 import ContactForm from "./ContactForm/ContactForm";
 import ContactList from "./ContactList/ContactList";
 
+const useLocalStorage = (key, defaultValue) => {
+  const [storage, setStorage] = useState(
+    () => window.JSON.parse(localStorage.getItem(key)) ?? defaultValue
+  );
+
+  useEffect(() => {
+    window.localStorage.setItem(key, JSON.stringify(storage));
+  }, [storage, key]);
+
+  return [storage, setStorage];
+};
+
 export const App = () => {
-  const [contacts,setContacts] = useState([
-    {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
-    {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
-    {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
-    {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'}
-  ])
+  const [contacts,setContacts] = useLocalStorage('contacts', []);
 
   const [filter,setFilter] = useState('');
 
@@ -42,13 +49,16 @@ export const App = () => {
   const filterContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
+
+  
+
   return (
     <div
       style={{
         height: '100vh',       
         fontSize: 40,
         color: '#010101',
-        margin: 20,
+        margin: 'auto',
         width: 400
       }}
     >

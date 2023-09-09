@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import style from './ContactForm.module.css';
 import { nanoid } from 'nanoid';
+import PropTypes from 'prop-types';
 
 export default function ContactForm({onSubmit}) {
     const [name,setName] = useState('');
@@ -60,3 +61,7 @@ export default function ContactForm({onSubmit}) {
     </div>    
   )
 }
+
+ContactForm.propTypes = {
+  onSubmit: PropTypes.func,
+};

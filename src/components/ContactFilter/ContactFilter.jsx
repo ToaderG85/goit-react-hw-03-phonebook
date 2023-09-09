@@ -1,6 +1,7 @@
 import React from 'react';
 import { nanoid } from 'nanoid';
 import style from './ContactFilter.module.css';
+import PropTypes from 'prop-types';
 
 export default function ContactFilter({ value, onChange }) {
     const filterID = nanoid();
@@ -19,3 +20,8 @@ export default function ContactFilter({ value, onChange }) {
       </div>
     );
 }
+
+ContactFilter.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
